@@ -10,8 +10,8 @@ using Pantry.Data;
 namespace Pantry.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    [Migration("20201021005052_Recreate")]
-    partial class Recreate
+    [Migration("20201028005421_CategoriesForeignKey")]
+    partial class CategoriesForeignKey
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -21,14 +21,31 @@ namespace Pantry.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("Pantry.Models.Categories", b =>
+                {
+                    b.Property<Guid>("CategoriesID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Status")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("CategoriesID");
+
+                    b.ToTable("Categories");
+                });
+
             modelBuilder.Entity("Pantry.Models.PantryItems", b =>
                 {
                     b.Property<Guid>("PantryItemsID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("CategoryID")
-                        .HasColumnType("int");
+                    b.Property<Guid>("CategoryID")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");

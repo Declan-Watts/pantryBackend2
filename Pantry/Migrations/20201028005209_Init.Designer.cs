@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Pantry.Data;
 
 namespace Pantry.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    partial class ApplicationDBContextModelSnapshot : ModelSnapshot
+    [Migration("20201028005209_Init")]
+    partial class Init
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -42,7 +44,7 @@ namespace Pantry.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("CategoriesID")
+                    b.Property<Guid?>("CategoryCategoriesID")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
@@ -50,52 +52,16 @@ namespace Pantry.Migrations
 
                     b.HasKey("PantryItemsID");
 
-                    b.HasIndex("CategoriesID");
+                    b.HasIndex("CategoryCategoriesID");
 
                     b.ToTable("PantryItems");
                 });
 
-            modelBuilder.Entity("Pantry.Models.PantryItems_Stock", b =>
-                {
-                    b.Property<Guid>("StockID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime?>("DateBought")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("ExpirationDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("PantryItemsID")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("Qty")
-                        .HasColumnType("int");
-
-                    b.HasKey("StockID");
-
-                    b.HasIndex("PantryItemsID");
-
-                    b.ToTable("PantryItems_Stock");
-                });
-
             modelBuilder.Entity("Pantry.Models.PantryItems", b =>
                 {
-                    b.HasOne("Pantry.Models.Categories", "Categories")
-                        .WithMany("PantryItems")
-                        .HasForeignKey("CategoriesID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Pantry.Models.PantryItems_Stock", b =>
-                {
-                    b.HasOne("Pantry.Models.PantryItems", "PantryItems")
-                        .WithMany("PantryItems_Stock")
-                        .HasForeignKey("PantryItemsID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasOne("Pantry.Models.Categories", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryCategoriesID");
                 });
 #pragma warning restore 612, 618
         }

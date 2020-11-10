@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Pantry.Data;
 
 namespace Pantry.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    partial class ApplicationDBContextModelSnapshot : ModelSnapshot
+    [Migration("20201101205653_AllowNull")]
+    partial class AllowNull
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -42,15 +44,13 @@ namespace Pantry.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("CategoriesID")
+                    b.Property<Guid>("CategoryID")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("PantryItemsID");
-
-                    b.HasIndex("CategoriesID");
 
                     b.ToTable("PantryItems");
                 });
@@ -70,32 +70,15 @@ namespace Pantry.Migrations
                     b.Property<Guid>("PantryItemsID")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<float?>("Price")
+                        .HasColumnType("real");
+
                     b.Property<int>("Qty")
                         .HasColumnType("int");
 
                     b.HasKey("StockID");
 
-                    b.HasIndex("PantryItemsID");
-
                     b.ToTable("PantryItems_Stock");
-                });
-
-            modelBuilder.Entity("Pantry.Models.PantryItems", b =>
-                {
-                    b.HasOne("Pantry.Models.Categories", "Categories")
-                        .WithMany("PantryItems")
-                        .HasForeignKey("CategoriesID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Pantry.Models.PantryItems_Stock", b =>
-                {
-                    b.HasOne("Pantry.Models.PantryItems", "PantryItems")
-                        .WithMany("PantryItems_Stock")
-                        .HasForeignKey("PantryItemsID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

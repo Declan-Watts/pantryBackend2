@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -25,7 +25,8 @@ namespace Pantry.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<PantryItems>>> GetPantryItems()
         {
-            return await _context.PantryItems.ToListAsync();
+            var Items = _context.PantryItems.Include(a => a.Categories).Include(a => a.PantryItems_Stock);
+            return await Items.ToListAsync();
         }
 
         // GET: api/PantryItems/5

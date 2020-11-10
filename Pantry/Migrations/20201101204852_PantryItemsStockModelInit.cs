@@ -2,7 +2,7 @@
 
 namespace Pantry.Migrations
 {
-    public partial class Recreate : Migration
+    public partial class PantryItemsStockModelInit : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
