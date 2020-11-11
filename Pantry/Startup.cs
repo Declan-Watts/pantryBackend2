@@ -32,7 +32,7 @@ namespace Pantry
                 options.AddPolicy("CorsPolicy",
                     builder => builder.AllowAnyOrigin()
                     .AllowAnyMethod()
-                    .AllowAnyHeader()
+                    .AllowAnyHeader());
             });
             services.AddDbContext<ApplicationDBContext>(options =>
                 options.UseSqlServer(
