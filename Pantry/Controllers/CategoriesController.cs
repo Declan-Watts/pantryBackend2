@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Pantry.Data;
@@ -15,16 +18,20 @@ namespace Pantry.Controllers
     public class CategoriesController : ControllerBase
     {
         private readonly ApplicationDBContext _context;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public CategoriesController(ApplicationDBContext context)
+        public CategoriesController(ApplicationDBContext context, UserManager<IdentityUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: api/Categories
         [HttpGet]
+        [Authorize]
         public async Task<ActionResult<IEnumerable<Categories>>> GetCategories()
         {
+            ClaimsPrincipal currentUser = this.User;
             var Items = _context.Categories.Include(a => a.PantryItems);
             return await Items.ToListAsync();
         }
