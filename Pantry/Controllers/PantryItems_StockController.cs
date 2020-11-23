@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -31,6 +32,7 @@ namespace Pantry.Controllers
 
         // GET: api/PantryItems_Stock/5
         [HttpGet("{id}")]
+        [Authorize]
         public async Task<ActionResult<PantryItems_Stock>> GetPantryItems_Stock(Guid id)
         {
             var pantryItems_Stock = await _context.PantryItems_Stock.FindAsync(id);
@@ -47,6 +49,7 @@ namespace Pantry.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
+        [Authorize]
         public async Task<IActionResult> PutPantryItems_Stock(Guid id, PantryItems_Stock pantryItems_Stock)
         {
             if (id != pantryItems_Stock.StockID)
@@ -79,6 +82,7 @@ namespace Pantry.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
+        [Authorize]
         public async Task<ActionResult<PantryItems_Stock>> PostPantryItems_Stock(PantryItems_Stock pantryItems_Stock)
         {
             _context.PantryItems_Stock.Add(pantryItems_Stock);
@@ -89,6 +93,7 @@ namespace Pantry.Controllers
 
         // DELETE: api/PantryItems_Stock/5
         [HttpDelete("{id}")]
+        [Authorize]
         public async Task<ActionResult<PantryItems_Stock>> DeletePantryItems_Stock(Guid id)
         {
             var pantryItems_Stock = await _context.PantryItems_Stock.FindAsync(id);

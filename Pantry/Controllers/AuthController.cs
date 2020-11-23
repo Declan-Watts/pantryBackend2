@@ -43,7 +43,7 @@ namespace Pantry.Controllers
             var identityUser = new IdentityUser() { 
                 UserName = userDetails.UserName, 
                 Email = userDetails.Email,
-                PhoneNumber = userDetails.PhoneNumber
+                PhoneNumber = userDetails.PhoneNumber,
             }; 
 
             var result = await userManager.CreateAsync(identityUser, userDetails.Password); 
@@ -76,7 +76,7 @@ namespace Pantry.Controllers
             }
             var token = GenerateToken(identityUser); 
             return Ok(new { 
-                Token = token, Message = "Success" 
+                Token = token, Message = "Success", Details = identityUser 
             });
         }
         [HttpPost]

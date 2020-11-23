@@ -38,6 +38,7 @@ namespace Pantry.Controllers
 
         // GET: api/Categories/5
         [HttpGet("{id}")]
+        [Authorize]
         public async Task<ActionResult<Categories>> GetCategories(Guid id)
         {
             var categories = await _context.Categories.FindAsync(id);
@@ -54,6 +55,7 @@ namespace Pantry.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
+        [Authorize]
         public async Task<IActionResult> PutCategories(Guid id, Categories categories)
         {
             if (id != categories.CategoriesID)
@@ -86,6 +88,7 @@ namespace Pantry.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
+        [Authorize]
         public async Task<ActionResult<Categories>> PostCategories(Categories categories)
         {
             _context.Categories.Add(categories);
@@ -96,6 +99,7 @@ namespace Pantry.Controllers
 
         // DELETE: api/Categories/5
         [HttpDelete("{id}")]
+        [Authorize]
         public async Task<ActionResult<Categories>> DeleteCategories(Guid id)
         {
             var categories = await _context.Categories.FindAsync(id);
