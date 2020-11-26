@@ -54,6 +54,23 @@ namespace Pantry.Controllers
         {
         }
 
+        // PUT api/<User>/MyProfile
+        [HttpPut]
+        [Route("MyProfile")]
+        public async Task<IActionResult> Put([FromBody] UserData UserData)
+        {
+            ClaimsPrincipal User = this.User;
+            var currentUser = await _userManager.FindByNameAsync(User.Identity.Name);
+            currentUser.Email = UserData.Email;
+            currentUser.PhoneNumber = UserData.PhoneNumber;
+            await _userManager.UpdateAsync(currentUser);
+            _context.SaveChanges();
+            return Ok(new
+            {
+                Message = "User Changes Saved"
+            });
+        }
+
         // DELETE api/<User>/5
         [HttpDelete("{id}")]
         public void Delete(int id)
